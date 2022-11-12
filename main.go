@@ -33,7 +33,7 @@ func main() {
 
 func GetHttpServerMux() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/get_box_info", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/add_event", func(w http.ResponseWriter, r *http.Request) {
 		body, _ := ioutil.ReadAll(r.Body)
 		var req logic.AddEventReq
 		json.Unmarshal(body, &req)
