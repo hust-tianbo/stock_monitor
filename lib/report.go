@@ -26,6 +26,9 @@ func Init() {
 }
 
 func ReportToWX(recv string, content string) {
+	// 强制写成测试账号
+	recv = "田博测试"
+
 	if bot == nil {
 		Init()
 	}
@@ -40,7 +43,8 @@ func ReportToWX(recv string, content string) {
 		return
 	}
 
-	log.Debugf("[ReportToWX]friends size %+v", len(friends))
+	/*log.Debugf("[ReportToWX]friends size %+v", len(friends))
+	log.Debugf("[ReportToWX]all friends %+v", friends)*/
 
 	friend := friends.SearchByRemarkName(1, recv)
 	if friend.Count() > 0 {

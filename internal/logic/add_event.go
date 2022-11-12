@@ -38,6 +38,7 @@ func AddEvent(req *AddEventReq) *AddEventRsp {
 		RecvUser:  req.RecvUser,
 		CTime:     now,
 		MTime:     now,
+		Status:    model.EventStatusInit,
 	})
 
 	if dbRes.Error != nil || dbRes.RowsAffected != 1 {
@@ -47,5 +48,30 @@ func AddEvent(req *AddEventReq) *AddEventRsp {
 	}
 
 	log.Debugf("[AddEvent]create event success:%+v", req)
+	return rsp
+}
+
+type DelEventReq struct {
+	EventName string `json:"event_name"`
+}
+
+type DelEventRsp struct {
+	Ret int    `json:"ret"` // 错误码
+	Msg string `json:"msg"` // 错误信息
+}
+
+func DelEvent(req *DelEventReq) *DelEventRsp {
+	var rsp = &DelEventRsp{Ret: lib.RetSuccess}
+
+	// 状态全部更新为删除状态
+	now := time.Now()
+	dbRes := EventDb.Table(model.EventTable).Where(&model.EventList{EventName: req.EventName}).Update(map[string]interface{}{"status": model.EventStatusDel, "m_time": now})
+
+	if dbRes.Error != nil {
+		log.Errorf("[DelEvent]del event:%+v|%+v", req, dbRes.Error)
+		rsp.Ret = lib.RetInternalError
+		return rsp
+	}
+
 	return rsp
 }

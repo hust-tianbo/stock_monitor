@@ -28,6 +28,5 @@ func QueryStock(req *QueryStockReq) *QueryStockRsp {
 
 	rsp.Price = price
 
-	lib.ReportToWX(req.SendUser, "hello")
 	return rsp
 }

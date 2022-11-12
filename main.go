@@ -8,6 +8,7 @@ import (
 	"github.com/hust-tianbo/go_lib/log"
 	"github.com/hust-tianbo/stock_monitor/config"
 	"github.com/hust-tianbo/stock_monitor/internal/logic"
+	"github.com/hust-tianbo/stock_monitor/internal/task"
 	"github.com/hust-tianbo/stock_monitor/lib"
 )
 
@@ -22,6 +23,7 @@ func main() {
 
 	logic.InitImp()
 	lib.Init()
+	task.DoingTask()
 
 	// 注册http接口
 	mux := GetHttpServerMux()
@@ -45,6 +47,19 @@ func GetHttpServerMux() *http.ServeMux {
 		}()
 
 		rsp = *logic.AddEvent(&req)
+		resBytes, _ := json.Marshal(rsp)
+		w.Write([]byte(resBytes))
+	})
+	mux.HandleFunc("/del_event", func(w http.ResponseWriter, r *http.Request) {
+		body, _ := ioutil.ReadAll(r.Body)
+		var req logic.DelEventReq
+		json.Unmarshal(body, &req)
+		var rsp logic.DelEventRsp
+		defer func() {
+			log.Debugf("[GetHttpServerMux]deal log:%+v,%+v", req, rsp)
+		}()
+
+		rsp = *logic.DelEvent(&req)
 		resBytes, _ := json.Marshal(rsp)
 		w.Write([]byte(resBytes))
 	})
