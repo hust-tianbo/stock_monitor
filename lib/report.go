@@ -7,10 +7,6 @@ import (
 
 var bot *openwechat.Bot
 
-func init() {
-	Init()
-}
-
 func Init() {
 	bot = openwechat.DefaultBot()
 

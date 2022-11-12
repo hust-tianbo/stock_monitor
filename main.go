@@ -8,6 +8,7 @@ import (
 	"github.com/hust-tianbo/go_lib/log"
 	"github.com/hust-tianbo/stock_monitor/config"
 	"github.com/hust-tianbo/stock_monitor/internal/logic"
+	"github.com/hust-tianbo/stock_monitor/lib"
 )
 
 const (
@@ -20,6 +21,7 @@ func main() {
 	config.InitConfig()
 
 	logic.InitImp()
+	lib.Init()
 
 	// 注册http接口
 	mux := GetHttpServerMux()
