@@ -43,7 +43,8 @@ func ReportToWX(recv string, content string) {
 	log.Debugf("[ReportToWX]friends size %+v", len(friends))
 
 	if len(friends) >= 1 {
-		log.Debugf("[ReportToWX]friends first %+v", friends.First())
+		ele := friends.First()
+		log.Debugf("[ReportToWX]friends first %+v|%+v|%+v|%+v", ele, ele.NickName, ele.UserName, ele.RemarkName)
 	}
 
 	friend := friends.SearchByUserName(1, recv)
