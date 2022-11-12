@@ -46,5 +46,18 @@ func GetHttpServerMux() *http.ServeMux {
 		resBytes, _ := json.Marshal(rsp)
 		w.Write([]byte(resBytes))
 	})
+	mux.HandleFunc("/query_stock", func(w http.ResponseWriter, r *http.Request) {
+		body, _ := ioutil.ReadAll(r.Body)
+		var req logic.QueryStockReq
+		json.Unmarshal(body, &req)
+		var rsp logic.QueryStockRsp
+		defer func() {
+			log.Debugf("[GetHttpServerMux]deal log:%+v,%+v", req, rsp)
+		}()
+
+		rsp = *logic.QueryStock(&req)
+		resBytes, _ := json.Marshal(rsp)
+		w.Write([]byte(resBytes))
+	})
 	return mux
 }
