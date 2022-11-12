@@ -42,12 +42,7 @@ func ReportToWX(recv string, content string) {
 
 	log.Debugf("[ReportToWX]friends size %+v", len(friends))
 
-	if len(friends) >= 1 {
-		ele := friends.First()
-		log.Debugf("[ReportToWX]friends first %+v|%+v|%+v|%+v", ele, ele.NickName, ele.UserName, ele.RemarkName)
-	}
-
-	friend := friends.SearchByUserName(1, recv)
+	friend := friends.SearchByRemarkName(1, recv)
 	if friend.Count() > 0 {
 		friend.SendText(content)
 	}

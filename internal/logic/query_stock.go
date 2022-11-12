@@ -7,6 +7,7 @@ import (
 
 type QueryStockReq struct {
 	StockNum string `json:"stock_num"`
+	SendUser string `json:"send_user"`
 }
 
 type QueryStockRsp struct {
@@ -27,6 +28,6 @@ func QueryStock(req *QueryStockReq) *QueryStockRsp {
 
 	rsp.Price = price
 
-	lib.ReportToWX("nothing_tb", "hello")
+	lib.ReportToWX(req.SendUser, "hello")
 	return rsp
 }
