@@ -21,7 +21,8 @@ func Init() {
 		panic(err)
 	}
 
-	bot.Block()
+	// 注释阻塞流程
+	//bot.Block()
 }
 
 func ReportToWX(recv string, content string) {
